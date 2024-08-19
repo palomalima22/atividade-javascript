@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Folha de Pagamento</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        label, input {
+            display: block;
+            margin-bottom: 10px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Folha de Pagamento</h1>
+    <form id="form-funcionario">
+        <label>Código do Funcionário:
+            <input type="number" id="codigo" required>
+        </label>
+        <label>Número de Horas Trabalhadas:
+            <input type="number" id="horas" required>
+        </label>
+        <label>Turno de Trabalho:
+            <select id="turno" required>
+                <option value="M">Matutino</option>
+                <option value="V">Vespertino</option>
+                <option value="N">Noturno</option>
+            </select>
+        </label>
+        <label>Categoria do Funcionário:
+            <select id="categoria" required>
+                <option value="F">Funcionário</option>
+                <option value="G">Gerente</option>
+            </select>
+        </label>
+        <label>Valor do Salário-Mínimo:
+            <input type="number" id="salarioMinimo" required step="0.01">
+        </label>
+        <button type="button" onclick="calcularSalario()">Calcular Salário</button>
+    </form>
+
+    <table id="resultado">
+        <thead>
+            <tr>
+                <th>Código do Funcionário</th>
+                <th>Número de Horas Trabalhadas</th>
+                <th>Valor da Hora Trabalhada</th>
+                <th>Salário Inicial</th>
+                <th>Auxílio-Alimentação</th>
+                <th>Salário Final</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+    <body>
+        <script src="calculosalario.js"></script>
+    </body>
+</body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cálculo de Frete</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        input, select {
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cálculo de Frete e Rastreamento</h1>
+    <form id="freteForm">
+        <label for="numPecas">Número total de peças:</label>
+        <input type="number" id="numPecas" required><br>
+
+        <label>Deseja rastreamento na entrega:</label>
+        <input type="radio" id="rastreamentoSim" name="rastreamento" value="S">
+        <label for="rastreamentoSim">Sim</label>
+        <input type="radio" id="rastreamentoNao" name="rastreamento" value="N" checked>
+        <label for="rastreamentoNao">Não</label><br>
+
+        <label for="regiao">Região de entrega:</label>
+        <select id="regiao" required>
+            <option value="1">1 - Sul</option>
+            <option value="2">2 - Sudeste</option>
+            <option value="3">3 - Centro-Oeste</option>
+            <option value="4">3 - Noroeste</option>
+        </select><br>
+
+        <label for="distancia">Distância total em quilômetros:</label>
+        <input type="number" id="distancia" required><br>
+
+        <button type="button" onclick="calcularFrete()">Calcular Frete</button>
+    </form>
+
+    <h2>Resultado:</h2>
+    <p id="resultado"></p>
+
+    <script>
+        function calcularFrete() {
+            // Obtém os valores dos campos do formulário
+            const numPecas = parseInt(document.getElementById('numPecas').value);
+            const rastreamento = document.querySelector('input[name="rastreamento"]:checked').value;
+            const regiao = parseInt(document.getElementById('regiao').value);
+            const distancia = parseFloat(document.getElementById('distancia').value);
+
+            // Define os preços e descontos
+            const precos = {1: 1.20, 2: 1.10, 3: 1.15};
+            const descontos = {1: 0.12, 2: 0.10, 3: 0.08};
+
+            // Calcula o valor do frete
+            let valorFrete;
+            if (numPecas <= 1000) {
+                valorFrete = numPecas * precos[regiao];
+            } else {
+                valorFrete = 1000 * precos[regiao];
+                const numPecasExcedentes = numPecas - 1000;
+                valorFrete += numPecasExcedentes * (precos[regiao] * (1 - descontos[regiao]));
+            }
+
+            // Calcula o valor do combustível
+            const valorCombustivel = distancia * 1.00;
+
+            // Calcula a taxa de rastreamento
+            const taxaRastreamento = rastreamento === 'S' ? 200.00 : 0.00;
+
+            // Calcula o valor total
+            const valorTotal = valorFrete + valorCombustivel + taxaRastreamento;
+
+            // Exibe o resultado
+            const resultado = `O valor total do frete é de R$ ${valorTotal.toFixed(2)}, incluindo R$ ${valorCombustivel.toFixed(2)} para combustível e R$ ${taxaRastreamento.toFixed(2)} para rastreamento (se aplicável).`;
+            document.getElementById('resultado').textContent = resultado;
+        }
+    </script>
+</body>
+</html>
